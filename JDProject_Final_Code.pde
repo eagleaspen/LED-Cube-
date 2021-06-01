@@ -1,18 +1,12 @@
-/**
+/*
+Junior Design LED Cube Project
+Aspen Eagle, Carson Edmonds, Benjamin Green
+6/1/2021
 
-ignore special characters
-
- * ControlP5 Matrix
- *
- * A matrix can be used for example as a sequencer, a drum machine.
- *
- * find a list of public methods available for the Matrix Controller
- * at the bottom of this sketch.
- *
- * by Andreas Schlegel, 2012
- * www.sojamo.de/libraries/controlp5
- *
- */
+This file contains the GUI control software and all pre-programmed displays. Options for user
+control include a custom message display, direct to the cube drawing tool, and buttons for the
+pre-programmed animations.
+*/
 
 import controlP5.*;
 import processing.serial.*;
