@@ -18,6 +18,7 @@ import controlP5.*;
 import processing.serial.*;
 import java.util.Random;
 
+int D_ANIM = 100;
 
 ControlP5 cp5;
 Serial port;
@@ -40,12 +41,71 @@ int ny = 8;
 int [][][][] matrix = new int[8][8][8][3];  //[column][row][layer][color & intensity]       
 
 
+// The Letter A represented by a bitmap
+int[][] A =  {
+              {0,0,0,0,0,0,0,0},
+              {0,0,1,1,1,1,0,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,1,1,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+             };
+
+// the letter E bitmap
+int [][] E = {
+              {0,0,0,0,0,0,0,0},
+              {0,1,1,1,1,1,1,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,1,1,1,0,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,1,1,1,1,0}
+             };
+
+// The letter H bitmap
+int [][] H = {
+              {0,0,0,0,0,0,0,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,1,1,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+             };
+ 
+  // letter L bitmap
+ int [][] L = {
+               {0,0,0,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,0,0,0,0,0},
+               {0,1,1,1,1,1,1,0},
+             };  
+ 
+  // Letter O bitmap
+  int [][] O = {             
+                {0,0,0,0,0,0,0,0},
+                {0,0,1,1,1,1,0,0},
+                {0,1,1,0,0,1,1,0},
+                {0,1,1,0,0,1,1,0},
+                {0,1,1,0,0,1,1,0},
+                {0,1,1,0,0,1,1,0},
+                {0,1,1,0,0,1,1,0},
+                {0,0,1,1,1,1,0,0},
+               };
 
 //adds and initializes the gui toolset consisting of the matrix, sliders, buttons, and message textfield  
 void setup() {
   size(750, 900);    //screen size
 
-  //port = new Serial(this, "COM3", 9600); // connect to com3 serial port w/ a baud rate of 9600
+  port = new Serial(this, "COM6", 9600); // connect to com3 serial port w/ a baud rate of 9600
   cp5 = new ControlP5(this);
 
 //create matrix
@@ -141,20 +201,20 @@ void setup() {
      ;
      
   //add buttons for the three animations
-  cp5.addButton("Animation1")
+  cp5.addButton("WAVE")
      .setPosition(75,650)
      .setSize(150,50)
      .setFont(createFont("arial",15))     
      ;
   
   // and add another 2 buttons
-  cp5.addButton("Animation2")
+  cp5.addButton("CUBECEPTION")
      .setPosition(275,650)
      .setSize(150,50)
      .setFont(createFont("arial",15))     
      ;
      
-  cp5.addButton("Animation3")
+  cp5.addButton("RAIN")
      .setPosition(475,650)
      .setSize(150,50)
      .setFont(createFont("arial",15))     
@@ -180,16 +240,20 @@ public void clear() {
   cp5.get(Textfield.class,"Message").clear();
 }
 
-//when Animation1 buton is pressed this function calls animation1() to send the animation to the cube
-public void Animation1(){
+//when the WAVE buton is pressed this function calls animation1() to send the animation to the cube
+public void WAVE(){
   animation1(); 
 }
 
-//when Animation2 buton is pressed this function calls animation2() to send the animation to the cube
-public void Animation2(){
+//when the CUBECEPTION buton is pressed this function calls animation2() to send the animation to the cube
+public void CUBECEPTION(){
   animation2(); 
 }
 
+//when the CUBECEPTION buton is pressed this function calls animation2() to send the animation to the cube
+public void RAIN(){
+  animation3(); 
+}
 
 
 //updates the matrix array from the (x,y) position, layer, and color indicated by the user whenever the MYMATRIX tool sweeps over any LED cells 
@@ -204,13 +268,11 @@ void myMatrix(int theX, int theY) {
 
 //Defines the hot keys to start/stop the animation with spacebar or clear the matrix with 0
 void keyPressed() {
-  //pause animation que with spacebar 
+  //pause/play animation que with spacebar 
   if (key==' ') {                                              
     if (cp5.get(Matrix.class, "myMatrix").isPlaying()) {
       cp5.get(Matrix.class, "myMatrix").pause();
-    } 
-    
-   //play animation que otherwise 
+    }     
     else {
       cp5.get(Matrix.class, "myMatrix").play();
     }
@@ -238,122 +300,124 @@ void controlEvent(ControlEvent theEvent) {
       clear();                                //clear the current matrix display
     
       if (text.charAt(i) == 'A' || text.charAt(i) == 'a' ){
-          letterA();
+          letterDisp(A);
       } 
         
       if (text.charAt(i) == 'B' || text.charAt(i) == 'b' ){
-        letterB();
+        //letterDisp(B);
       }  
       
       if (text.charAt(i) == 'C' || text.charAt(i) == 'c' ){
-        letterC();
+        //letterDisp(C);
       }  
       
       if (text.charAt(i) == 'D' || text.charAt(i) == 'd' ){
-        letterD();
+        //letterDisp(D);
       }  
       
       if (text.charAt(i) == 'E' || text.charAt(i) == 'e'){
-        letterE();
+        letterDisp(E);
       }  
       
       if (text.charAt(i) == 'F' || text.charAt(i) == 'f' ){
-        letterF();
+        //letterDisp(F);
       }  
       
       if (text.charAt(i) == 'G' || text.charAt(i) == 'g' ){
-        letterG();
+        //letterDisp(G);
       }  
       
       if (text.charAt(i) == 'H' || text.charAt(i) == 'h' ){
-        letterH();
+        letterDisp(H);
       }  
       
       if (text.charAt(i) == 'I' || text.charAt(i) == 'i' ){
-        letterI();
+        //letterDisp(I);
       }  
       
       if (text.charAt(i) == 'J' || text.charAt(i) == 'j' ){
-        letterJ();
+        //letterDisp(J);
       } 
       
       if (text.charAt(i) == 'K' || text.charAt(i) == 'k' ){
-        letterK();
+        //letterDisp(K);
       } 
       
       if (text.charAt(i) == 'L' || text.charAt(i) == 'l' ){
-        letterL();
+        letterDisp(L);
       } 
       
       if (text.charAt(i) == 'M' || text.charAt(i) == 'm' ){
-        letterM();
+        //letterDisp(M);
       }  
       
       if (text.charAt(i) == 'N' || text.charAt(i) == 'n' ){
-        letterN();
+        //letterDisp(N);
       } 
       
       if (text.charAt(i) == 'O' || text.charAt(i) == 'o' ){
-        letterO();
+        letterDisp(O);
         //call funct
       }  
       
       if (text.charAt(i) == 'P' || text.charAt(i) == 'p' ){
-        letterP();
+        //letterDisp(P);
         //call funct
       }  
       
       if (text.charAt(i) == 'Q' || text.charAt(i) == 'q' ){
         //call funct
-        letterQ();
+        //letterDisp(Q);
       }  
       
       if (text.charAt(i) == 'R' || text.charAt(i) == 'r' ){
         //call funct
-        letterR();
+        //letterDisp(R);
       } 
       
       if (text.charAt(i) == 'S' || text.charAt(i) == 's' ){
         //call funct
-        letterS();
+        //letterDisp(S);
       }  
       
       if (text.charAt(i) == 'T' || text.charAt(i) == 't' ){
         //call funct
-        letterT();
+        //letterDisp(T);
       } 
       
       if (text.charAt(i) == 'U' || text.charAt(i) == 'u' ){
         //call funct
-        letterU();
-      }  if (text.charAt(i) == 'V' || text.charAt(i) == 'v' ){
+        //letterDisp(U);
+      }  
+      
+      if (text.charAt(i) == 'V' || text.charAt(i) == 'v' ){
         //call funct
-        letterV();
+        //letterDisp(V);
       }  
       
       if (text.charAt(i) == 'W' || text.charAt(i) == 'w' ){
         //call funct
-        letterW();
+        //letterDisp(W);
       }
       
       if (text.charAt(i) == 'X' || text.charAt(i) == 'x' ){
         //call funct
-        letterX();
+        //letterDisp(X);
       }  
       
       if (text.charAt(i) == 'Y' || text.charAt(i) == 'y' ){
         //call funct
-        letterY();
+        //letterDisp(Y);
       } 
       
       if (text.charAt(i) == 'Z' || text.charAt(i) == 'z' ){
         //call funct
-        letterZ();
+        //letterDisp(Z);
       }  
       
       if (text.charAt(i) == '0'){
         //call funct
-        letterO();
+        //letterDisp(O);
       }  
       
       if (text.charAt(i) == '1'){
@@ -391,7 +455,7 @@ void controlEvent(ControlEvent theEvent) {
       if (text.charAt(i) == '9'){
            num9(); //call funct
       } 
-      delay(50);       //delay 50ms
+      delay(10*D_ANIM);       //delay 500ms
        
     }
   }
@@ -401,30 +465,28 @@ void controlEvent(ControlEvent theEvent) {
 //This function sends a display to the LED cube by parsing through the matrix array and converting it to a bit stream that is sent to the microcontroller
 //  *the print functions are for debugging and demo only, uncomment port.write() commands when interfacing with the cube
 void parse_array(){
+  byte stream = 0;
+  byte s;
   for(int l = 0; l < 2; l++){              //parse intensity
     for(int h = 0; h < 8; h++){            //parse layers
+      //delay(2);
+      //port.write(h);
       for(int i = 0; i < 8; i++){          //parse rows
         for(int j = 0; j < 3; j++){        //parse colors
+          stream = 0;
           for(int k = 0; k < 8; k++){      //parse each column in a row
-          
             if(l == 0){                    //check for LED intensity in frame one
-              if(matrix[k][i][h][j] > 0){
-                port.write(1);
-              }
-              else{
-                port.write(0);
+              if(matrix[k][i][h][j] > 0) {
+                stream += (1 << k);
               }
             }
-            
             if(l == 1){                      //check for LED intensity in frame two
-              if(matrix[k][i][h][j] == 255){
-                port.write(1);
-              }
-              else{
-                port.write(0); 
+              if(matrix[k][i][h][j] > 127) {
+                stream += (1 << k);
               }
             }
           }
+          port.write(stream);
         }
       }
     }
@@ -442,9 +504,21 @@ void reset(){
       }
     }
   }  
-  RED = 0;
-  GREEN = 0;
-  BLUE = 0;
+  //RED = 0;
+  //GREEN = 0;
+  //BLUE = 0;
+}
+
+void set(int val) {
+  for(int i = 0; i < 8; i++){
+    for(int j = 0; j < 8; j++){
+      for(int k = 0; k < 8; k++){
+        matrix[i][j][k][0] = val;
+        matrix[i][j][k][1] = val;
+        matrix[i][j][k][2] = val; 
+      }
+    }
+  }  
 }
 
 
@@ -457,7 +531,7 @@ void reset(){
 void animation1(){
   reset();
   int [] wave_array = {8, 7, 4, 1, 0, 1, 4, 7}; //array of sin wave values
-  for(int r = 0; r < 16; r++){  //cycle through the wave 16 times
+  for(int r = 0; r < 5; r++){  //cycle through the wave 16 times
     for(int i = 0; i < 8; i++){  //wave starting position 0-7
       for(int j = 0; j < 8; j ++){ //row to store from 0-7
         int h = wave_array[(j+i) % 8];    //indicates the height of the wave 
@@ -510,10 +584,11 @@ void animation1(){
         }
       }
       parse_array();
-      delay(50); //delay 50ms betweeen frames of the wave
+      delay(D_ANIM); //delay 50ms betweeen frames of the wave
     }
   }
   reset();
+  parse_array();
 }
 
 //growing cube animation stores a frame of the animation in the matrix, calls to parse/display the matrix, waits 50ms, then resets the matrix and repeats for the rest of the animation 
@@ -577,7 +652,7 @@ void animation2(){
         matrix[j][i][i][2] = BLUE;
       }
       parse_array();  //display cube
-      delay(50);      //delay 50ms
+      delay(D_ANIM);      //delay 50ms
     } 
     
     //shrinking cube
@@ -633,10 +708,11 @@ void animation2(){
         matrix[j][i][i][2] = BLUE;
       }
       parse_array();  //display cube
-      delay(50);      //delay 50ms
+      delay(D_ANIM);      //delay 50ms
     } 
   }
   reset();
+  parse_array();
 }
 
 //this rain animation generates a random location for a raindrop that then falls and changes color till it hits the bottom of the cube. Calls to parse_array to display a frame of the animation
@@ -695,7 +771,7 @@ void animation3(){
         matrix[col][row][a][2] = BLUE;
         
         parse_array();  //display this frame
-        delay(50);     //delay 50ms
+        delay(D_ANIM);     //delay 50ms
       }
     }
   }
@@ -706,127 +782,149 @@ void animation3(){
 
 //For each of these alpha-numeric display functions the corresponding matrix values for that character are written
 //with the current RGB values determined by the GUI. After storing the character's matrix values parse_array() is called.
+  //Letter A
+  //0b00000000,
+  //0b00111100,
+  //0b01100110,
+  //0b01100110,
+  //0b01111110,
+  //0b01100110,
+  //0b01100110,
+  //0b01100110,
 
 
+
+void letterDisp(int[][] bitmap) {
+  reset();
+  
+  for(int i = 0; i < 8; i++) {
+    for(int j = 0; j < 8; j++) {
+      
+      matrix[i][0][j][0] = (bitmap[j][i] == 1 ? RED : 0);
+      matrix[i][0][j][1] = (bitmap[j][i] == 1 ? GREEN : 0);
+      matrix[i][0][j][2] = (bitmap[j][i] == 1 ? BLUE : 0);
+    }
+  }
+  
+  parse_array();
+  
+}
 
 void letterA(){
-  for (int i=0; i < 8; i++){ 
-    if (i == 0){
-      for (int j = 0; j < 8; j++){ //top row not lit up
-        matrix[j][i][0][0] = 0;
-        matrix[j][i][0][1] = 0;
-        matrix[j][i][0][2] = 0;
-      }
-    }
   
+  reset();
+  
+  for (int i=0; i < 8; i++){ 
+    
     if (i == 1){ //next row makes the top of the A
       for (int j = 2; j < 6; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
+        matrix[j][0][i][0] = RED;
+        matrix[j][0][i][1] = GREEN;
+        matrix[j][0][i][2] = BLUE;
       }
     }
     
     if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
+        matrix[1][0][i][0] = RED;
+        matrix[1][0][i][1] = GREEN;
+        matrix[1][0][i][2] = BLUE;
       
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
+        matrix[2][0][i][0] = RED;
+        matrix[2][0][i][1] = GREEN;
+        matrix[2][0][i][2] = BLUE;
         
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
+        matrix[5][0][i][0] = RED;
+        matrix[5][0][i][1] = GREEN;
+        matrix[5][0][i][2] = BLUE;
         
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
+        matrix[6][0][i][0] = RED;
+        matrix[6][0][i][1] = GREEN;
+        matrix[6][0][i][2] = BLUE;
     }
     
     if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
+        matrix[1][0][i][0] = RED;
+        matrix[1][0][i][1] = GREEN;
+        matrix[1][0][i][2] = BLUE;
       
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
+        matrix[2][0][i][0] = RED;
+        matrix[2][0][i][1] = GREEN;
+        matrix[2][0][i][2] = BLUE;
         
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
+        matrix[5][0][i][0] = RED;
+        matrix[5][0][i][1] = GREEN;
+        matrix[5][0][i][2] = BLUE;
         
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
+        matrix[6][0][i][0] = RED;
+        matrix[6][0][i][1] = GREEN;
+        matrix[6][0][i][2] = BLUE;
     }
   
     if (i == 4){
       for (int j = 1; j < 6; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
+        matrix[j][0][i][0] = RED;
+        matrix[j][0][i][1] = GREEN;
+        matrix[j][0][i][2] = BLUE;
       }
     }
     
     if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
+        matrix[1][0][i][0] = RED;
+        matrix[1][0][i][1] = GREEN;
+        matrix[1][0][i][2] = BLUE;
       
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
+        matrix[2][0][i][0] = RED;
+        matrix[2][0][i][1] = GREEN;
+        matrix[2][0][i][2] = BLUE;
         
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
+        matrix[5][0][i][0] = RED;
+        matrix[5][0][i][1] = GREEN;
+        matrix[5][0][i][2] = BLUE;
         
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
+        matrix[6][0][i][0] = RED;
+        matrix[6][0][i][1] = GREEN;
+        matrix[6][0][i][2] = BLUE;
     }
     
     if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
+        matrix[1][0][i][0] = RED;
+        matrix[1][0][i][1] = GREEN;
+        matrix[1][0][i][2] = BLUE;
       
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
+        matrix[2][0][i][0] = RED;
+        matrix[2][0][i][1] = GREEN;
+        matrix[2][0][i][2] = BLUE;
         
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
+        matrix[5][0][i][0] = RED;
+        matrix[5][0][i][1] = GREEN;
+        matrix[5][0][i][2] = BLUE;
         
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
+        matrix[6][0][i][0] = RED;
+        matrix[6][0][i][1] = GREEN;
+        matrix[6][0][i][2] = BLUE;
     }
  
     if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
+        matrix[1][0][i][0] = RED;
+        matrix[1][0][i][1] = GREEN;
+        matrix[1][0][i][2] = BLUE;
       
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
+        matrix[2][0][i][0] = RED;
+        matrix[2][0][i][1] = GREEN;
+        matrix[2][0][i][2] = BLUE;
         
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
+        matrix[5][0][i][0] = RED;
+        matrix[5][0][i][1] = GREEN;
+        matrix[5][0][i][2] = BLUE;
         
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE; //bottom of A
+        matrix[6][0][i][0] = RED;
+        matrix[6][0][i][1] = GREEN;
+        matrix[6][0][i][2] = BLUE; //bottom of A
     }
   }
-    parse_array(); //send it to the board
+  parse_array(); //send it to the board
 }
+  //Letter A
   //0b00000000,
   //0b00111100,
   //0b01100110,
@@ -1055,7 +1153,7 @@ void letterC(){
   parse_array();
 } 
 
-/*
+/*Letter C
   B00000000,
   B00111100,
   B01100110,
