@@ -40,8 +40,7 @@ int ny = 8;
 //initialize the led matrix array
 int [][][][] matrix = new int[8][8][8][3];  //[column][row][layer][color & intensity]       
 
-
-// The Letter A represented by a bitmap
+//2D integer array of a bitmap for each alpha-numeric character
 int[][] A =  {
               {0,0,0,0,0,0,0,0},
               {0,0,1,1,1,1,0,0},
@@ -51,21 +50,74 @@ int[][] A =  {
               {0,1,1,0,0,1,1,0},
               {0,1,1,0,0,1,1,0},
               {0,1,1,0,0,1,1,0},
-             };
+};
 
-// the letter E bitmap
-int [][] E = {
+int [][] B = {
               {0,0,0,0,0,0,0,0},
-              {0,1,1,1,1,1,1,0},
-              {0,1,1,0,0,0,0,0},
-              {0,1,1,0,0,0,0,0},
               {0,1,1,1,1,1,0,0},
-              {0,1,1,0,0,0,0,0},
-              {0,1,1,0,0,0,0,0},
-              {0,1,1,1,1,1,1,0}
-             };
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,1,1,1,0,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,1,1,1,0,0},
+};
 
-// The letter H bitmap
+int [][] C = {
+              {0,0,0,0,0,0,0,0},
+              {0,0,1,1,1,1,0,0},
+              {0,1,1,0,0,1,1,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,0,0,0,0,0},
+              {0,1,1,0,0,1,1,0},
+              {0,0,1,1,1,1,0,0},
+};
+
+int [][] D = {  
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,1,1,1,0,0},
+};
+
+int [][] E = {  
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+};
+
+int [][] F = {  
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+};
+
+int [][] G = {
+             {0,0,0,0,0,0,0,0},
+             {0,0,1,1,1,1,0,0},
+             {0,1,1,0,0,1,1,0},
+             {0,1,1,0,0,0,0,0},
+             {0,1,1,0,0,0,0,0},
+             {0,1,1,0,1,1,1,0},
+             {0,1,1,0,0,1,1,0},
+             {0,0,1,1,1,1,0,0},
+};
+
 int [][] H = {
               {0,0,0,0,0,0,0,0},
               {0,1,1,0,0,1,1,0},
@@ -75,31 +127,316 @@ int [][] H = {
               {0,1,1,0,0,1,1,0},
               {0,1,1,0,0,1,1,0},
               {0,1,1,0,0,1,1,0},
-             };
+};
+
+int [][] I = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] J = {  
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,1,1,1,1,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,0,1,1,0,0},
+            {0,1,1,0,1,1,0,0},
+            {0,1,1,0,1,1,0,0},
+            {0,0,1,1,1,0,0,0},
+};
+
+int [][] K = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,1,1,0,0},
+            {0,1,1,1,1,0,0,0},
+            {0,1,1,1,0,0,0,0},
+            {0,1,1,1,1,0,0,0},
+            {0,1,1,0,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+};
+
+int [][] L = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+};
+
+int [][] M = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,1,0,1,1,1},
+            {0,1,1,1,1,1,1,1},
+            {0,1,1,0,1,0,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+};
+
+int [][] N = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,1,0,0,1,1},
+            {0,1,1,1,1,0,1,1},
+            {0,1,1,0,1,1,1,1},
+            {0,1,1,0,0,1,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+};
+
+int [][] O = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] P = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+};
+
+int [][] Q = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,1,1,1,0},
+            {0,0,1,1,1,1,0,0},
+            {0,0,0,0,0,1,1,0},
+};
  
-  // letter L bitmap
- int [][] L = {
-               {0,0,0,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,0,0,0,0,0},
-               {0,1,1,1,1,1,1,0},
-             };  
+int [][] R = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,1,1,0,0,0},
+            {0,1,1,0,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+};
  
-  // Letter O bitmap
-  int [][] O = {             
+int [][] S = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,0,0,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] T = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,1,0,1,1,0,1,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+};
+
+int [][] U = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,1,0},
+};
+
+int [][] V = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+            {0,0,0,1,1,0,0,0},
+};
+
+int [][] W = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,1,0,1,1},
+            {0,1,1,1,1,1,1,1},
+            {0,1,1,1,0,1,1,1},
+            {0,1,1,0,0,0,1,1},
+};
+
+int [][] X = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+            {0,0,1,1,0,1,1,0},
+            {0,0,0,1,1,1,0,0},
+            {0,0,1,1,0,1,1,0},
+            {0,1,1,0,0,0,1,1},
+            {0,1,1,0,0,0,1,1},
+};
+
+int [][] Y = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+};
+
+int [][] Z = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,0,0,0,0,1,1,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,1,1,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+};
+
+int [][] zero = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,1,1,1,0},
+            {0,1,1,1,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] one = {
+              {0,0,0,0,0,0,0,0},
+              {0,0,0,1,1,0,0,0},
+              {0,0,0,1,1,0,0,0},
+              {0,0,1,1,1,0,0,0},
+              {0,0,0,1,1,0,0,0},
+              {0,0,0,1,1,0,0,0},
+              {0,0,0,1,1,0,0,0},
+              {0,1,1,1,1,1,1,0},
+};
+
+
+int [][] two = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,0,0,0,1,1,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,1,1,0,0,0,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+};
+
+int [][] three = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,0,0,0,1,1,0},
+            {0,0,0,1,1,1,0,0},
+            {0,0,0,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] four = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,1,1,1,0,0},
+            {0,0,1,0,1,1,0,0},
+            {0,1,0,0,1,1,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,0,1,1,0,0},
+};
+
+int [][] five = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,0,0,0,0,1,1,0},
+            {0,0,0,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] six = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,0,0,0},
+            {0,1,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] seven = {
+            {0,0,0,0,0,0,0,0},
+            {0,1,1,1,1,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,0,1,1,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+            {0,0,0,1,1,0,0,0},
+};
+
+int [][] eight = {
+            {0,0,0,0,0,0,0,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+            {0,1,1,0,0,1,1,0},
+            {0,1,1,0,0,1,1,0},
+            {0,0,1,1,1,1,0,0},
+};
+
+int [][] nine = { 
                 {0,0,0,0,0,0,0,0},
                 {0,0,1,1,1,1,0,0},
                 {0,1,1,0,0,1,1,0},
                 {0,1,1,0,0,1,1,0},
-                {0,1,1,0,0,1,1,0},
-                {0,1,1,0,0,1,1,0},
+                {0,0,1,1,1,1,1,0},
+                {0,0,0,0,0,1,1,0},
                 {0,1,1,0,0,1,1,0},
                 {0,0,1,1,1,1,0,0},
-               };
+};      
 
 //adds and initializes the gui toolset consisting of the matrix, sliders, buttons, and message textfield  
 void setup() {
@@ -304,15 +641,15 @@ void controlEvent(ControlEvent theEvent) {
       } 
         
       if (text.charAt(i) == 'B' || text.charAt(i) == 'b' ){
-        //letterDisp(B);
+        letterDisp(B);
       }  
       
       if (text.charAt(i) == 'C' || text.charAt(i) == 'c' ){
-        //letterDisp(C);
+        letterDisp(C);
       }  
       
       if (text.charAt(i) == 'D' || text.charAt(i) == 'd' ){
-        //letterDisp(D);
+        letterDisp(D);
       }  
       
       if (text.charAt(i) == 'E' || text.charAt(i) == 'e'){
@@ -320,27 +657,27 @@ void controlEvent(ControlEvent theEvent) {
       }  
       
       if (text.charAt(i) == 'F' || text.charAt(i) == 'f' ){
-        //letterDisp(F);
+        letterDisp(F);
       }  
       
       if (text.charAt(i) == 'G' || text.charAt(i) == 'g' ){
-        //letterDisp(G);
-      }  
+        letterDisp(G);
+      } 
       
       if (text.charAt(i) == 'H' || text.charAt(i) == 'h' ){
         letterDisp(H);
       }  
       
       if (text.charAt(i) == 'I' || text.charAt(i) == 'i' ){
-        //letterDisp(I);
+        letterDisp(I);
       }  
       
       if (text.charAt(i) == 'J' || text.charAt(i) == 'j' ){
-        //letterDisp(J);
+        letterDisp(J);
       } 
       
       if (text.charAt(i) == 'K' || text.charAt(i) == 'k' ){
-        //letterDisp(K);
+        letterDisp(K);
       } 
       
       if (text.charAt(i) == 'L' || text.charAt(i) == 'l' ){
@@ -348,112 +685,99 @@ void controlEvent(ControlEvent theEvent) {
       } 
       
       if (text.charAt(i) == 'M' || text.charAt(i) == 'm' ){
-        //letterDisp(M);
+        letterDisp(M);
       }  
       
       if (text.charAt(i) == 'N' || text.charAt(i) == 'n' ){
-        //letterDisp(N);
+        letterDisp(N);
       } 
       
       if (text.charAt(i) == 'O' || text.charAt(i) == 'o' ){
         letterDisp(O);
-        //call funct
       }  
       
       if (text.charAt(i) == 'P' || text.charAt(i) == 'p' ){
-        //letterDisp(P);
-        //call funct
+        letterDisp(P);
       }  
       
       if (text.charAt(i) == 'Q' || text.charAt(i) == 'q' ){
-        //call funct
-        //letterDisp(Q);
+        letterDisp(Q);
       }  
       
       if (text.charAt(i) == 'R' || text.charAt(i) == 'r' ){
-        //call funct
-        //letterDisp(R);
+        letterDisp(R);
       } 
       
       if (text.charAt(i) == 'S' || text.charAt(i) == 's' ){
-        //call funct
-        //letterDisp(S);
+        letterDisp(S);
       }  
       
       if (text.charAt(i) == 'T' || text.charAt(i) == 't' ){
-        //call funct
-        //letterDisp(T);
+        letterDisp(T);
       } 
       
       if (text.charAt(i) == 'U' || text.charAt(i) == 'u' ){
-        //call funct
-        //letterDisp(U);
+        letterDisp(U);
       }  
       
       if (text.charAt(i) == 'V' || text.charAt(i) == 'v' ){
-        //call funct
-        //letterDisp(V);
+        letterDisp(V);
       }  
       
       if (text.charAt(i) == 'W' || text.charAt(i) == 'w' ){
-        //call funct
-        //letterDisp(W);
+        letterDisp(W);
       }
       
       if (text.charAt(i) == 'X' || text.charAt(i) == 'x' ){
-        //call funct
-        //letterDisp(X);
+        letterDisp(X);
       }  
       
       if (text.charAt(i) == 'Y' || text.charAt(i) == 'y' ){
-        //call funct
-        //letterDisp(Y);
+        letterDisp(Y);
       } 
       
       if (text.charAt(i) == 'Z' || text.charAt(i) == 'z' ){
-        //call funct
-        //letterDisp(Z);
+        letterDisp(Z);
       }  
       
       if (text.charAt(i) == '0'){
-        //call funct
-        //letterDisp(O);
+        letterDisp(zero);
       }  
       
       if (text.charAt(i) == '1'){
-        num1();//call funct
+        letterDisp(one);
       }  
      
       if (text.charAt(i) == '2'){
-        num2();//call funct
+        letterDisp(two);
       }  
       
       if (text.charAt(i) == '3'){
-        num3();//call funct
+        letterDisp(three);
       } 
      
       if (text.charAt(i) == '4'){
-        num4();//call funct
+        letterDisp(four);
       }  
      
       if (text.charAt(i) == '5'){
-        num5();//call funct
+        letterDisp(five);
       } 
      
       if (text.charAt(i) == '6'){
-        num6();//call funct
+        letterDisp(six);
       } 
       
       if (text.charAt(i) == '7'){
-        num7();//call funct
+        letterDisp(seven);
       }  
      
       if (text.charAt(i) == '8'){
-            num8();//call funct
+        letterDisp(eight);
       } 
      
       if (text.charAt(i) == '9'){
-           num9(); //call funct
+        letterDisp(nine);
       } 
       delay(10*D_ANIM);       //delay 500ms
        
@@ -780,20 +1104,7 @@ void animation3(){
 
 ///////////// PRE-PROGRAMMED ALPHA-NUMERIC DISPLAYS //////////////////////////////////
 
-//For each of these alpha-numeric display functions the corresponding matrix values for that character are written
-//with the current RGB values determined by the GUI. After storing the character's matrix values parse_array() is called.
-  //Letter A
-  //0b00000000,
-  //0b00111100,
-  //0b01100110,
-  //0b01100110,
-  //0b01111110,
-  //0b01100110,
-  //0b01100110,
-  //0b01100110,
-
-
-
+//Passes in a bitmap array and stores RGB values in the matrix array wherever the bitmap value is 1 then calls parse_array to display on the cube
 void letterDisp(int[][] bitmap) {
   reset();
   
@@ -810,4436 +1121,3 @@ void letterDisp(int[][] bitmap) {
   
 }
 
-void letterA(){
-  
-  reset();
-  
-  for (int i=0; i < 8; i++){ 
-    
-    if (i == 1){ //next row makes the top of the A
-      for (int j = 2; j < 6; j++){
-        matrix[j][0][i][0] = RED;
-        matrix[j][0][i][1] = GREEN;
-        matrix[j][0][i][2] = BLUE;
-      }
-    }
-    
-    if (i == 2){ 
-        matrix[1][0][i][0] = RED;
-        matrix[1][0][i][1] = GREEN;
-        matrix[1][0][i][2] = BLUE;
-      
-        matrix[2][0][i][0] = RED;
-        matrix[2][0][i][1] = GREEN;
-        matrix[2][0][i][2] = BLUE;
-        
-        matrix[5][0][i][0] = RED;
-        matrix[5][0][i][1] = GREEN;
-        matrix[5][0][i][2] = BLUE;
-        
-        matrix[6][0][i][0] = RED;
-        matrix[6][0][i][1] = GREEN;
-        matrix[6][0][i][2] = BLUE;
-    }
-    
-    if (i == 3){
-        matrix[1][0][i][0] = RED;
-        matrix[1][0][i][1] = GREEN;
-        matrix[1][0][i][2] = BLUE;
-      
-        matrix[2][0][i][0] = RED;
-        matrix[2][0][i][1] = GREEN;
-        matrix[2][0][i][2] = BLUE;
-        
-        matrix[5][0][i][0] = RED;
-        matrix[5][0][i][1] = GREEN;
-        matrix[5][0][i][2] = BLUE;
-        
-        matrix[6][0][i][0] = RED;
-        matrix[6][0][i][1] = GREEN;
-        matrix[6][0][i][2] = BLUE;
-    }
-  
-    if (i == 4){
-      for (int j = 1; j < 6; j++){
-        matrix[j][0][i][0] = RED;
-        matrix[j][0][i][1] = GREEN;
-        matrix[j][0][i][2] = BLUE;
-      }
-    }
-    
-    if (i == 5){
-        matrix[1][0][i][0] = RED;
-        matrix[1][0][i][1] = GREEN;
-        matrix[1][0][i][2] = BLUE;
-      
-        matrix[2][0][i][0] = RED;
-        matrix[2][0][i][1] = GREEN;
-        matrix[2][0][i][2] = BLUE;
-        
-        matrix[5][0][i][0] = RED;
-        matrix[5][0][i][1] = GREEN;
-        matrix[5][0][i][2] = BLUE;
-        
-        matrix[6][0][i][0] = RED;
-        matrix[6][0][i][1] = GREEN;
-        matrix[6][0][i][2] = BLUE;
-    }
-    
-    if (i == 6){
-        matrix[1][0][i][0] = RED;
-        matrix[1][0][i][1] = GREEN;
-        matrix[1][0][i][2] = BLUE;
-      
-        matrix[2][0][i][0] = RED;
-        matrix[2][0][i][1] = GREEN;
-        matrix[2][0][i][2] = BLUE;
-        
-        matrix[5][0][i][0] = RED;
-        matrix[5][0][i][1] = GREEN;
-        matrix[5][0][i][2] = BLUE;
-        
-        matrix[6][0][i][0] = RED;
-        matrix[6][0][i][1] = GREEN;
-        matrix[6][0][i][2] = BLUE;
-    }
- 
-    if (i == 7){
-        matrix[1][0][i][0] = RED;
-        matrix[1][0][i][1] = GREEN;
-        matrix[1][0][i][2] = BLUE;
-      
-        matrix[2][0][i][0] = RED;
-        matrix[2][0][i][1] = GREEN;
-        matrix[2][0][i][2] = BLUE;
-        
-        matrix[5][0][i][0] = RED;
-        matrix[5][0][i][1] = GREEN;
-        matrix[5][0][i][2] = BLUE;
-        
-        matrix[6][0][i][0] = RED;
-        matrix[6][0][i][1] = GREEN;
-        matrix[6][0][i][2] = BLUE; //bottom of A
-    }
-  }
-  parse_array(); //send it to the board
-}
-  //Letter A
-  //0b00000000,
-  //0b00111100,
-  //0b01100110,
-  //0b01100110,
-  //0b01111110,
-  //0b01100110,
-  //0b01100110,
-  //0b01100110,
-
-
-
-void letterB(){
-  for (int i=0; i < 8; i++){
-   if (i == 0){
-      for (int j = 0; j < 8; j++){
-       matrix[j][i][0][0] = 0;
-       matrix[j][i][0][1] = 0;
-       matrix[j][i][0][2] = 0;
-      }
-   }
-   
-   if (i == 1){
-    for (int j = 1; j < 5; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
-      }
-    }
-    
-    if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 4){
-      for (int j = 1; j < 6; j++){
-       matrix[j][i][0][0] = RED;
-       matrix[j][i][0][1] = GREEN;
-       matrix[j][i][0][2] = BLUE;
-      }
-    }
-   
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 7){
-     for (int j = 1; j < 5; j++){
-       matrix[j][i][0][0] = RED;
-       matrix[j][i][0][1] = GREEN;
-       matrix[j][i][0][2] = BLUE;
-     } 
-    }
-    
-  }
-  parse_array();
-}
-
-//capital B
- /* 
-  0b00000000,
-  0b01111100,
-  0b01100110,
-  0b01100110,
-  0b01111100,
-  0b01100110,
-  0b01100110,
-  0b01111100
-  */
-
-void letterC(){
-  for (int i=0; i < 8; i++){
-     if (i == 0){
-      for (int j = 0; j < 8; j++){
-        matrix[j][i][0][0] = 0;
-        matrix[j][i][0][1] = 0;
-        matrix[j][i][0][2] = 0;
-      }
-     }
-     
-     if (i == 1){
-        for (int j = 2; j < 6; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
-        }
-     }
-    
-    if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-    
-    if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
- 
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 7){
-       for (int j = 2; j < 6; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-       } 
-    }
- }
-  parse_array();
-} 
-
-/*Letter C
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100000,
-  B01100000,
-  B01100000,
-  B01100110,
-  B00111100
-*/
-
-void letterD(){
-  for (int i=0; i < 8; i++){
-     if (i == 0){
-        for (int j = 0; j < 8; j++){
-           matrix[j][i][0][0] = 0;
-           matrix[j][i][0][1] = 0;
-           matrix[j][i][0][2] = 0;
-        }
-     }
-     if (i == 1){
-        for (int j = 2; j < 5; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-        }
-     }
-    
-    if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
- 
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 7){
-       for (int j = 1; j < 5; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-      } 
-    }
-  }
-  parse_array();
-} 
-/*LETTER D
-  B00000000,
-  B01111100,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01111100
-*/
-
-
-void letterE(){
-  for (int i=0; i < 8; i++){
-     if (i == 0){
-        for (int j = 0; j < 8; j++){
-           matrix[j][i][0][0] = 0;
-           matrix[j][i][0][1] = 0;
-           matrix[j][i][0][2] = 0;
-        }
-     }
-   
-    if (i == 1){
-      for (int j = 1; j < 7; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-      }
-    }
-    
-    if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-  
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-   
-    if (i == 4){
-       for (int j = 1; j < 5; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-        }
-    }
-  
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-  
-    if (i == 7){
-       for (int j = 1; j < 7; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-       } 
-    }
-  }
-  parse_array();
-}
-/* LETTER E
-  B00000000,
-  B01111110,
-  B01100000,
-  B01100000,
-  B01111100,
-  B01100000,
-  B01100000,
-  B01111110
-*/
-
-
-void letterF(){
-  for (int i=0; i < 8; i++){
-     if (i == 0){
-        for (int j = 0; j < 8; j++){
-        matrix[j][i][0][0] = 0;
-        matrix[j][i][0][1] = 0;
-        matrix[j][i][0][2] = 0;
-        }
-      }
-      
-      if (i == 1){
-        for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-        }
-      }
-      
-     if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-      
-      if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-      
-      if (i == 4){
-         for (int j = 1; j < 5; j++){
-              matrix[j][i][0][0] = RED;
-              matrix[j][i][0][1] = GREEN;
-              matrix[j][i][0][2] = BLUE;
-         }
-      }
-      
-      if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-      
-      if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-      
-      if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      } 
-  }
-  parse_array();
-} 
-/* LETTER F
-  B00000000,
-  B01111110,
-  B01100000,
-  B01100000,
-  B01111100,
-  B01100000,
-  B01100000,
-  B01100000
-*/
-
-
-void letterG(){
-  for (int i=0; i < 8; i++){
-     if (i == 0){
-        for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-        }
-     }
-   
-    if (i == 1){
-        for (int j = 2; j < 6; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-        }
-    }
- 
-    if (i == 2){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
- 
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-    
-    if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-     }
-  
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 7){
-      for (int j = 2; j < 6; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-      } 
-    }
-  }
-  parse_array();
-} 
-/* LETTER G
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100000,
-  B01100000,
-  B01101110,
-  B01100110,
-  B00111100
-*/
-
-
-void letterH(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-      if (i == 0){
-        for (int j = 0; j < 8; j++){
-           matrix[j][i][0][0] = 0;
-           matrix[j][i][0][1] = 0;
-           matrix[j][i][0][2] = 0;
-        }
-      }
-  
-    if (i == 1){ //next row makes the top of the H
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
- 
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 4){
-      for (int j = 1; j < 7; j++){
-           matrix[j][i][0][0] = RED;
-           matrix[j][i][0][1] = GREEN;
-           matrix[j][i][0][2] = BLUE;
-    
-      }
-    }
-    
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    
-    if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE; //bottom 
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER H
-  B00000000,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01111110,
-  B01100110,
-  B01100110,
-  B01100110
-*/
-
-
-void letterI(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-           matrix[j][i][0][0] = 0;
-           matrix[j][i][0][1] = 0;
-           matrix[j][i][0][2] = 0;
-      }
-    }
-  
-    if (i == 1){ //next row makes the top of letter
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-  
-    if (i == 2){ 
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  
-    if (i == 3){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  
-    if (i == 4){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-    
-    if (i == 5){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  
-    if (i == 6){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  
-    if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; //bottom
-    }
-  }
-  parse_array(); //send it to the board
-}  
-/* LETTER I
-  B00000000,
-  B00111100,
-  B00011000,
-  B00011000,
-  B00011000,
-  B00011000,
-  B00011000,
-  B00111100
-*/
-
-
-void letterJ(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-      if (i == 0){
-        for (int j = 0; j < 8; j++){
-           matrix[j][i][0][0] = 0;
-           matrix[j][i][0][1] = 0;
-           matrix[j][i][0][2] = 0;
-        }
-      }
-  
-      if (i == 1){ //next row makes the top of letter
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
- 
-      if (i == 2){ 
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
-     
-      if (i == 3){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
-  
-      if (i == 4){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-       }
-
-      if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
-  
-      if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
-  
-      if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;//bottom
-      }
-  }
-  parse_array(); //send it to the board
-} 
-/* LETTER J
-  B00000000,
-  B00011110,
-  B00001100,
-  B00001100,
-  B00001100,
-  B01101100,
-  B01101100,
-  B00111000
-*/
-
-
-void letterK(){
-    for (int i=0; i < 8; i++){ //top row not lit up
-        if (i == 0){
-          for (int j = 0; j < 8; j++){
-               matrix[j][i][0][0] = 0;
-               matrix[j][i][0][1] = 0;
-               matrix[j][i][0][2] = 0;
-          }
-        }
-    
-      if (i == 1){ //next row makes the top of letter
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
-     
-      if (i == 2){ //1245
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
- 
-      if (i == 3){//1234
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-      }
-  
-      if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-      }
-
-      if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-      }
-  
-      if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
-  
-      if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;//bottom
-      }
- }
-  parse_array(); //send it to the board
-} 
-/* LETTER K
-  B00000000,
-  B01100110,
-  B01101100,
-  B01111000,
-  B01110000,
-  B01111000,
-  B01101100,
-  B01100110
-*/
-
-void letterL(){
-    for (int i=0; i < 8; i++){ 
-      if (i == 0){
-        for (int j = 0; j < 8; j++){ //top row not lit up
-               matrix[j][i][0][0] = 0;
-               matrix[j][i][0][1] = 0;
-               matrix[j][i][0][2] = 0;
-        }
-      }
-      if (i == 1){ //next row makes the top of letter
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-    
-      if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-       }
-  
-       if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
- 
-      if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
-
-      if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-       }
-     
-      if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      }
- 
-      if (i == 7){
-            for (int j = 1; j < 7; j++){
-               matrix[j][i][0][0] = RED;
-               matrix[j][i][0][1] = GREEN;
-               matrix[j][i][0][2] = BLUE; //bottom
-            }
-      }
-   }
-  parse_array(); //send it to the board
-}  
-/* LETTER L
-  B00000000,
-  B01100000,
-  B01100000,
-  B01100000,
-  B01100000,
-  B01100000,
-  B01100000,
-  B01111110
-*/
-
-
-void letterM(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-         matrix[j][i][0][0] = 0;
-         matrix[j][i][0][1] = 0;
-         matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top 1267
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 2){ //123567
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 3){
-       for (int j = 0; j < 7; j++){
-         matrix[j][i][0][0] = RED;
-         matrix[j][i][0][1] = GREEN;
-         matrix[j][i][0][2] = BLUE;
-    }
-  }
-  if (i == 4){//12467
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 5){//1267
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE; //bottom
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER M
-  B00000000,
-  B01100011,
-  B01110111,
-  B01111111,
-  B01101011,
-  B01100011,
-  B01100011,
-  B01100011
-*/
-
-
-
-void letterN(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-         matrix[j][i][0][0] = 0;
-         matrix[j][i][0][1] = 0;
-         matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 2){ //12367
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 3){//123467
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  
-  }
-  
-  if (i == 4){//124567
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 5){//12567
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE; //bottom
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER N
-  B00000000,
-  B01100011,
-  B01110011,
-  B01111011,
-  B01101111,
-  B01100111,
-  B01100011,
-  B01100011
-*/
-
-
-void letterO(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[i][j][0][0] = 0;
-          matrix[i][j][0][1] = 0;
-          matrix[i][j][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top //2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; //bottom
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* LETTER O
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B00111100
-*/
-
-
-void letterP(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[i][j][0][0] = 0;
-          matrix[i][j][0][1] = 0;
-          matrix[i][j][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top 12345
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  }
-  if (i == 2){ //1256
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-   }
- 
-  if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 5){ //12345
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;//bottom
-  }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER P
-  B00000000,
-  B01111100,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01111100,
-  B01100000,
-  B01100000
-*/
-
-
-void letterQ(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-      if (i == 0){
-        for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-        }
-      }
-  
-      if (i == 1){ //next row makes the top
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
- 
-      if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
- 
-      if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
- 
-      if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
- 
-      if (i == 5){//12456
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-      }
- 
-      if (i == 6){ //2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-      }
- 
-      if (i == 7){        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE; //bottom
-      }
-    }
-  parse_array(); //send it to the board
-  }
-/* LETTER Q
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01101110,
-  B00111100,
-  B00000110
-*/
-
-
-void letterR(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top of letter
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  }
-  
-  if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  
-  }
-  
-  if (i == 5){ //1234
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-  }
-  if (i == 6){ //1245
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-
-  }
-  if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;//bottom
-  }
-  }
-  parse_array(); //send it to the board
-  } 
-/* LETTER R
-  B00000000,
- 1 B01111100,
- 2 B01100110,
- 3 B01100110,
- 4 B01111100,
- 5 B01111000,
- 6 B01101100,
- 7 B01100110
-*/
-
-
-void letterS(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top of letter 2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  }
-  if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-  }
-  if (i == 4){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
- 
-  if (i == 5){
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;//bottom
-    }
-  }
-  parse_array(); //send it to the board
-} 
-/* LETTER S
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100000,
-  B00111100,
-  B00000110,
-  B01100110,
-  B00111100
-*/
-
-
-void letterT(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top of letter
-for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-    }
-  }
-  if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  
-  if (i == 3){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-  }
-  if (i == 4){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  
-  if (i == 5){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;//bottom
-  }
-  }
-  parse_array(); //send it to the board
- }  
-/* LETTER T
-  B00000000,
-  B01111110,
-  B01011010,
-  B00011000,
-  B00011000,
-  B00011000,
-  B00011000,
-  B00011000
-*/
-
-
-void letterU(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 7){
-   for (int j = 2; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-    } //bottom
-  }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER U
-  B00000000,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B00111110
-*/
-
-
-void letterV(){
-  for (int i=0; i < 8; i++){ //top row not lit up
-  if (i == 0){
-    for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-    }
-  }
-  if (i == 1){ //next row makes the top
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-  }
-  if (i == 6){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-       
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-  }
-  if (i == 7){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-  }
- } 
-  parse_array(); //send it to the board
-  }
-/* LETTER V
-  B00000000,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B01100110,
-  B00111100,
-  B00011000
-*/
-
-
-void letterW(){
-  for (int i=0; i < 8; i++){ 
-    if (i == 0){
-      for (int j = 0; j < 8; j++){//top row not lit up
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top 1267
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 4){//12456
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-               
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 5){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-    if (i == 6){ //123567
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-       
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER W
-  B00000000,
-  B01100011,
-  B01100011,
-  B01100011,
-  B01101011,
-  B01111111,
-  B01110111,
-  B01100011
-*/
-
-
-void letterX(){
-  for (int i=0; i < 8; i++){ 
-    if (i == 0){
-      for (int j = 0; j < 8; j++){//top row not lit up
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 3){ //2356
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-       
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-       
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-       
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
-    if (i == 7){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-        
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-       
-        matrix[7][i][0][0] = RED;
-        matrix[7][i][0][1] = GREEN;
-        matrix[7][i][0][2] = BLUE;
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER X
-  B00000000,
-  B01100011,
-  B01100011,
-  B00110110,
-  B00011100,
-  B00110110,
-  B01100011,
-  B01100011
-*/
-
-
-void letterY(){
-  for (int i=0; i < 8; i++){ 
-    if (i == 0){
-      for (int j = 0; j < 8; j++){//top row not lit up
-         matrix[j][i][0][0] = 0;
-         matrix[j][i][0][1] = 0;
-         matrix[j][i][0][2] = 0;
-      }
-
-    }
-    if (i == 1){ //next row makes the top
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){ //2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-    if (i == 6){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-    if (i == 7){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER Y
-  B00000000,
-  B01100110,
-  B01100110,
-  B01100110,
-  B00111100,
-  B00011000,
-  B00011000,
-  B00011000
-*/
-
-
-void letterZ(){
-  for (int i=0; i < 8; i++){ 
-    if (i == 0){
-      for (int j = 0; j < 8; j++){//top row not lit up
-         matrix[j][i][0][0] = 0;
-         matrix[j][i][0][1] = 0;
-         matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-     for (int j = 1; j < 8; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-    if (i == 2){ 
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-          
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-          
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 4){  
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-          
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-          
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-          
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-    if (i == 7){
-      for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
- }
-  parse_array(); //send it to the board
-}
-/* LETTER Z
-  B00000000,
-  B01111110,
-  B00000110,
-  B00001100,
-  B00011000,
-  B00110000,
-  B01100000,
-  B01111110
-*/
-
-
-void num0(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; //bottom
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 0
-  B00000000,
-  B00111100,
-  B01100110,
-  B01101110,
-  B01110110,
-  B01100110,
-  B01100110,
-  B00111100
-*/
-
-
-void num1(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 2){ 
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 3){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 5){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-    
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-      for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 1
-  B00000000,
-  B00011000,
-  B00011000,
-  B00111000,
-  B00011000,
-  B00011000,
-  B00011000,
-  B01111110
-*/
-
-
-void num2(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-      for (int j = 2; j < 5; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-        
-    }
-    if (i == 2){ //1256
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){//56
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 5){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-      for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 2
-  B00000000,
-  B00111100,
-  B01100110,
-  B00000110,
-  B00001100,
-  B00110000,
-  B01100000,
-  B01111110
-*/
-
-
-void num3(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-       for (int j = 2; j < 5; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
-      }
-        
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 3){
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){
-      for (int j = 3; j < 5; j++){
-        matrix[j][i][0][0] = RED;
-        matrix[j][i][0][1] = GREEN;
-        matrix[j][i][0][2] = BLUE;
-      }
-        
-    }
-    if (i == 5){
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE;
-    
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-      for (int j = 2; j < 5; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 3
-  B00000000,
-  B00111100,
-  B01100110,
-  B00000110,
-  B00011100,
-  B00000110,
-  B01100110,
-  B00111100
-*/
-
-
-void num4(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE; 
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE; 
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){     
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 5){
-       for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-       }
-    }
-    if (i == 6){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){        //45
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 4
-  B00000000,
-  B00001100,
-  B00011100,
-  B00101100,
-  B01001100,
-  B01111110,
-  B00001100,
-  B00001100
-*/
-
-
-void num5(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-      for (int j = 1; j < 7; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-    }
-    if (i == 3){
-       for (int j = 1; j < 6; j++){
-          matrix[j][i][0][0] = RED;
-          matrix[j][i][0][1] = GREEN;
-          matrix[j][i][0][2] = BLUE;
-      }
-        
-    }
-    if (i == 4){      
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;     
-    }
-    if (i == 5){
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE; 
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE; 
-        
-    }
-    if (i == 7){ //2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE; 
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-      
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 5
-  B00000000,
-  B01111110,
-  B01100000,
-  B01111100,
-  B00000110,
-  B00000110,
-  B01100110,
-  B00111100
-*/
-
-
-void num6(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE; 
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-      
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){ //12345
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE; 
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 5){
-      
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE; 
-      
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 6
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100000,
-  B01111100,
-  B01100110,
-  B01100110,
-  B00111100
-*/
-
-
-void num7(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-      for (int j = 1; j < 7; j++){
-        matrix[i][j][0][0] = RED; //bottom
-        matrix[i][j][0][1] = GREEN;
-        matrix[i][j][0][2] = BLUE;
-      }
-        
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 3){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 4){
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 5){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE;
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 7
-  B00000000,
-  B01111110,
-  B01100110,
-  B00001100,
-  B00001100,
-  B00011000,
-  B00011000,
-  B00011000
-*/
-
-
-void num8(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE; 
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-      
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-    if (i == 5){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-  }
-  parse_array();
-}
-/* NUM 8
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100110,
-  B00111100,
-  B01100110,
-  B01100110,
-  B00111100
-*/
-
-
-void num9(){
- for (int i=0; i < 8; i++){ //top row not lit up
-    if (i == 0){
-      for (int j = 0; j < 8; j++){
-          matrix[j][i][0][0] = 0;
-          matrix[j][i][0][1] = 0;
-          matrix[j][i][0][2] = 0;
-      }
-    }
-    if (i == 1){ //next row makes the top
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-    }
-    if (i == 2){ 
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 3){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 4){ //23456
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-    }
-    if (i == 5){
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 6){
-        matrix[1][i][0][0] = RED;
-        matrix[1][i][0][1] = GREEN;
-        matrix[1][i][0][2] = BLUE; 
-      
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE;
-        
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE; 
-      
-        matrix[6][i][0][0] = RED;
-        matrix[6][i][0][1] = GREEN;
-        matrix[6][i][0][2] = BLUE;
-        
-    }
-    if (i == 7){ //2345
-        matrix[2][i][0][0] = RED;
-        matrix[2][i][0][1] = GREEN;
-        matrix[2][i][0][2] = BLUE; 
-      
-        matrix[3][i][0][0] = RED;
-        matrix[3][i][0][1] = GREEN;
-        matrix[3][i][0][2] = BLUE;
-        
-        matrix[4][i][0][0] = RED;
-        matrix[4][i][0][1] = GREEN;
-        matrix[4][i][0][2] = BLUE; 
-      
-        matrix[5][i][0][0] = RED;
-        matrix[5][i][0][1] = GREEN;
-        matrix[5][i][0][2] = BLUE;
-        
-    }
-  }
-  parse_array(); //send it to the board
-}
-/* NUM 9
-  B00000000,
-  B00111100,
-  B01100110,
-  B01100110,
-  B00111110,
-  B00000110,
-  B01100110,
-  B00111100
-*/
