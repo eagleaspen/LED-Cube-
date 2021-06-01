@@ -1,3 +1,8 @@
+//Junior Design LED Cube Project Firmware Code
+//Benjamin Green, Aspen Eagle, and Carson Edmonds
+//6/1/2021
+//This firmware code reads serial data sent from the GUI and processes it so that it can
+//send a display to the cube by outputing to the microcontroller pins
 
 byte**** data;
 
@@ -93,10 +98,8 @@ void write_row_registers(const int CLK, const int R, const int G, const int B, b
     digitalWrite(B, ((d3 & (1 << i)) != 0? HIGH: LOW));  //write 1 bit and shift to the next bit
     delayMicroseconds(1);
     digitalWrite(CLK, HIGH);
-    //delayMicroseconds(1);
   }
   digitalWrite(CLK, LOW);
-  //delayMicroseconds(1);
   digitalWrite(CLK, HIGH);
   digitalWrite(3, LOW);
 }
@@ -115,7 +118,6 @@ void read_serial() {
             if(Serial.available()){
               _data = Serial.read();
               data[i][j][k][l] = (byte) _data; // byte for 1 register
-              //Serial.println(data[i][j][k][l]);
             } else {
               delayMicroseconds(10);
               timeout++;
@@ -136,7 +138,6 @@ void read_serial() {
 void write_data() {
   int t_delay;
   char ri, rj, rk, rl;
-  //Serial.println("Writing Data");
   for(int i = 0; i < 2; i++) {
     for(int j = 0; j < 8; j++) { // Layer Loop
       write_reg(LAYER_CLK, LAYER_DATA, 1 << (j)); // Reset Layer Register to show layer 1
@@ -159,37 +160,9 @@ void write_data() {
 
 void loop(){
   // put your main code here, to run repeatedly:
-  /*dr+=1;
-  dr = dr%256;
-  dg+=2;
-  dg = dg%256;
-  db+=3;
-  db = db%256;
-  write_row_registers(ROW_CLK_PINS[0], DATA_PINS[0], DATA_PINS[1], DATA_PINS[2], 255, 0, 0);
-  delay(1);
-  write_row_registers(ROW_CLK_PINS[0], DATA_PINS[0], DATA_PINS[1], DATA_PINS[2], 0, 0, 0);
-  delay(6);*/
 
   read_serial();
-  /*fill_data(0b11111111);
 
-  for(int i = 0; i < 8; i++) {
-    write_row_registers(ROW_CLK_PINS[i],
-              DATA_PINS[0],
-              DATA_PINS[1],
-              DATA_PINS[2],
-              0b11111111,
-              0b11111111,
-              0b11111111);
-  }
-
-  for(int i = 0; i < 8; i++) {
-    write_reg(LAYER_CLK, LAYER_DATA, 1 << i);
-  delay(1000);
-  }*/
   write_data();
 
-  
-  //digitalWrite(3, LOW);
-  //delay(1);
 }
